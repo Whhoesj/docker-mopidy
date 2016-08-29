@@ -27,6 +27,9 @@ RUN pip install -U six \
     && pip install markerlib \
     && pip install Mopidy-YouTube \
     && pip install Mopidy-Local-SQLite \
+    && pip install Mopidy-Local-Images \
+    && pip install Mopidy-Party \
+    && pip install Mopidy-Simple-Webclient \
     && pip install --upgrade pafy
 
 RUN pip install Mopidy-Mopify \
