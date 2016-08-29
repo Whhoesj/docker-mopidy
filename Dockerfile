@@ -29,6 +29,12 @@ RUN pip install -U six \
     && pip install Mopidy-Local-SQLite \
     && pip install --upgrade pafy
 
+RUN pip install Mopidy-Mopify \
+    && pip install Mopidy-Spotmop \
+    && pip install Mopidy-MusicBox-Webclient \
+    && pip install Mopidy-API-Explorer
+
+
 ADD mopidy.conf /var/lib/mopidy/.config/mopidy/mopidy.conf
 
 ADD entrypoint.sh /entrypoint.sh
