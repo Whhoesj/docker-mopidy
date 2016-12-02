@@ -3,8 +3,8 @@ Image for running [Mopidy](https://www.mopidy.com/) in Docker.
 Supports audio output with Pulseaudio or [Snapcast](https://github.com/badaix/snapcast).
 
 ## Tags
-`latest` and `snapcast` uses Snapcast for audio output
-`pulseaudio` uses Pulseaudio for audio output
+`snapcast` uses Snapcast for audio output
+`latest` and `pulseaudio` uses Pulseaudio for audio output
 
 ## How to use
 ```bash
