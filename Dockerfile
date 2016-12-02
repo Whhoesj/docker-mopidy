@@ -37,6 +37,11 @@ RUN pip install Mopidy-Mopify \
     && pip install Mopidy-MusicBox-Webclient \
     && pip install Mopidy-API-Explorer
 
+ADD snapserver.deb /tmp/snapserver.deb
+RUN apt-get install -y libavahi-client3 libavahi-common3 \
+    && dpkg -i /tmp/snapserver.deb \
+    && apt-get install -f \
+    && rm /tmp/snapserver.deb
 
 ADD mopidy.conf /var/lib/mopidy/.config/mopidy/mopidy.conf
 
@@ -53,6 +58,10 @@ VOLUME /var/lib/mopidy/.config/mopidy/account-config
 
 EXPOSE 6600
 EXPOSE 6680
+EXPOSE 1704
+EXPOSE 1705
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/bin/mopidy"]
+
+ADD audio.conf /var/lib/mopidy/.config/mopidy/audio.conf
