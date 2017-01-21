@@ -1,23 +1,59 @@
-# Mopidy
+# Mopidy Docker image
 Image for running [Mopidy](https://www.mopidy.com/) in Docker.
-Supports audio output with Pulseaudio or [Snapcast](https://github.com/badaix/snapcast).
+Uses Pulseaudio for audio output.
 
-## Tags
-`snapcast` uses Snapcast for audio output  
-`latest` and `pulseaudio` uses Pulseaudio for audio output
+## Contents
+### Frontend extensions
+* [Iris](https://github.com/jaedb/Iris)
+* [Mopidy Musicbox Webclient](https://github.com/pimusicbox/mopidy-musicbox-webclient)
+* [Mopidy Party](https://github.com/Lesterpig/mopidy-party)
+* [Mopidy Simple webclient](https://github.com/xolox/mopidy-simple-webclient)
+* [API explorer](https://github.com/dz0ny/mopidy-api-explorer)
+* [Local images](https://github.com/tkem/mopidy-local-images)
+
+### Backend extensions
+* Spotify
+* Spotify tunigo
+* Youtube
+* Soundcloud
+* Scrobbler
+* Tunein
+* Local SQLite
 
 ## How to use
 ```bash
-    docker run \
-        --name mopidy \
-        -e PULSE_SERVER=tcp:127.0.0.1:4713 \      # (Optional) Pulseaudio server for sound
-        -e USE_SNAPCAST=true \                    # Set true to activate Snapcast (event with the Snapcast image)
-        -v $PWD/media:/var/lib/mopidy/media:ro \  # Media files
-        -v $PWD/local:/var/lib/mopidy/local \     # Some kind of music storage(?)
-        -v $PWD/account-config:/var/lib/mopidy/.config/mopidy/account-config \ # Place here the account configurations (see account-config.conf)
-        -p 6600:6600 \  # Port for MPD
-        -p 6680:6680 \  # Port for the webinterface
-        -p 1704:1704 \  # Port for Snapcast streaming
-        -p 1705:1705 \  # Port for Snapcast control
-        whhoesj/mopidy
+docker run \
+    --name mopidy \
+    -e PULSE_SERVER=tcp:127.0.0.1:4713 \   # Pulseaudio server
+    -v $PWD/media:/media:ro \              # Media files
+    -v $PWD/data:/var/lib/mopidy \         # Mopidy data and cache
+    -v $PWD/mopidy.conf:/mopidyconf \      # Override config (for accounts)
+    -p 6600:6600 \                         # Port for MPD
+    -p 6680:6680 \                         # Port for the webinterface
+    -p 6681:6681 \                         # (Optional) Port for Iris pusher service
+    whhoesj/mopidy
 ```
+
+## Volumes
+To keep the Mopidy data persistent, `/var/lib/mopidy` should be mounted as a volume. The Mopidy user must have write access to this directory. Set this with `chown -R 105 /path/to/data`.
+
+## Accounts
+To add Spotify, Last.FM etc. accounts, use the `/mopidy.conf` file. Example:
+```
+[spotify]
+enabled = true
+username =
+password =
+
+[scrobbler]
+enabled = true
+username =
+password =
+
+[soundcloud]
+enabled = true
+auth_token =
+```
+
+## Local media
+To play local media files, mount `/media`. All meta data will be stored using Mopidy-Local-SQLite. To scan for new media files, run `docker exec -it mopidy localscan`.

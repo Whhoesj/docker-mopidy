@@ -30,38 +30,35 @@ RUN pip install -U six \
     && pip install Mopidy-Local-Images \
     && pip install Mopidy-Party \
     && pip install Mopidy-Simple-Webclient \
-    && pip install --upgrade pafy
-
-RUN pip install Mopidy-Mopify \
-    && pip install Mopidy-Spotmop \
+    && pip install Mopidy-Iris \
     && pip install Mopidy-MusicBox-Webclient \
     && pip install Mopidy-API-Explorer
 
-ADD snapserver.deb /tmp/snapserver.deb
-RUN apt-get install -y libavahi-client3 libavahi-common3 \
-    && dpkg -i /tmp/snapserver.deb \
-    && apt-get install -f \
-    && rm /tmp/snapserver.deb
+#ADD snapserver.deb /tmp/snapserver.deb
+#RUN apt-get install -y libavahi-client3 libavahi-common3 \
+#    && dpkg -i /tmp/snapserver.deb \
+#    && apt-get install -f \
+#    && rm /tmp/snapserver.deb
 
-ADD mopidy.conf /var/lib/mopidy/.config/mopidy/mopidy.conf
+ADD mopidy.conf /etc/mopidy.conf
 
 ADD entrypoint.sh /entrypoint.sh
 
-RUN chown mopidy:audio -R /var/lib/mopidy/.config \
+RUN chown mopidy:audio -R /var/lib/mopidy \
     && chown mopidy:audio /entrypoint.sh
 
-USER mopidy
+ADD localscan /usr/bin/localscan
+RUN chmod +x /usr/bin/localscan
 
-VOLUME /var/lib/mopidy/local
-VOLUME /var/lib/mopidy/media
-VOLUME /var/lib/mopidy/.config/mopidy/account-config
+VOLUME /var/lib/mopidy
+VOLUME /media
+VOLUME /mopidy.conf
 
 EXPOSE 6600
 EXPOSE 6680
-EXPOSE 1704
-EXPOSE 1705
+EXPOSE 6681
+
+USER mopidy
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/bin/mopidy"]
-
-ADD audio.conf /var/lib/mopidy/.config/mopidy/audio.conf
