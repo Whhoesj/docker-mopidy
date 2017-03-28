@@ -1,6 +1,8 @@
 CURRENTDATE=`date +%Y%m%d`
 
-all: pulseaudio
+all: build
+
+build: pulseaudio
 
 pulseaudio:
 	docker build -t whhoesj/mopidy:pulseaudio .
