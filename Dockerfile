@@ -32,7 +32,8 @@ RUN pip install -U six \
     && pip install Mopidy-Simple-Webclient \
     && pip install Mopidy-Iris \
     && pip install Mopidy-MusicBox-Webclient \
-    && pip install Mopidy-API-Explorer
+    && pip install Mopidy-API-Explorer \
+    && pip install Mopidy-Mopify
 
 #ADD snapserver.deb /tmp/snapserver.deb
 #RUN apt-get install -y libavahi-client3 libavahi-common3 \
