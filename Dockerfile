@@ -35,13 +35,20 @@ RUN pip install -U six \
     && pip install Mopidy-API-Explorer \
     && pip install Mopidy-Mopify
 
-#ADD snapserver.deb /tmp/snapserver.deb
-#RUN apt-get install -y libavahi-client3 libavahi-common3 \
-#    && dpkg -i /tmp/snapserver.deb \
-#    && apt-get install -f \
-#    && rm /tmp/snapserver.deb
+ADD snapserver_0.12.0_amd64.deb /tmp/snapserver.deb
+RUN apt-get install -y libavahi-client3 libavahi-common3 \
+   && dpkg -i /tmp/snapserver.deb \
+   && apt-get install -f \
+   && rm /tmp/snapserver.deb
+
+RUN mkdir /var/lib/snapserver \
+    && chown mopidy:audio -R /var/lib/snapserver \
+    && mkdir /var/run/snapserver \
+    && chown mopidy:audio -R /var/run/snapserver
 
 ADD mopidy.conf /etc/mopidy.conf
+ADD audio-pulse.conf /audio-pulse.conf
+ADD audio-snapcast.conf /audio-snapcast.conf
 
 ADD entrypoint.sh /entrypoint.sh
 
@@ -58,6 +65,8 @@ VOLUME /mopidy.conf
 EXPOSE 6600
 EXPOSE 6680
 EXPOSE 6681
+EXPOSE 1704
+EXPOSE 1705
 
 USER mopidy
 
