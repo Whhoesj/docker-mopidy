@@ -23,6 +23,7 @@ RUN apt-get update \
         python-setuptools
 
 RUN curl -L https://bootstrap.pypa.io/get-pip.py | python -
+RUN pip install --ignore-installed Mopidy-Iris
 RUN pip install -U six \
     && pip install markerlib \
     && pip install Mopidy-YouTube \
@@ -30,7 +31,6 @@ RUN pip install -U six \
     && pip install Mopidy-Local-Images \
     && pip install Mopidy-Party \
     && pip install Mopidy-Simple-Webclient \
-    && pip install Mopidy-Iris \
     && pip install Mopidy-MusicBox-Webclient \
     && pip install Mopidy-API-Explorer \
     && pip install Mopidy-Mopify
