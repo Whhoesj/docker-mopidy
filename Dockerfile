@@ -20,7 +20,8 @@ RUN apt-get update \
         gstreamer0.10-alsa \
         gstreamer1.0-libav \
         python-crypto \
-        python-setuptools
+        python-setuptools \
+        youtube-dl
 
 RUN curl -L https://bootstrap.pypa.io/get-pip.py | python -
 RUN pip install --ignore-installed Mopidy-Iris
