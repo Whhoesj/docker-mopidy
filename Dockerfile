@@ -3,7 +3,7 @@ MAINTAINER Wouter Habets (wouterhabets@gmail.com)
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        curl \
+        curl gnupg \
     && curl -L https://apt.mopidy.com/mopidy.gpg -o /tmp/mopidy.gpg \
     && curl -L https://apt.mopidy.com/mopidy.list -o /etc/apt/sources.list.d/mopidy.list \
     && apt-key add /tmp/mopidy.gpg \
@@ -16,8 +16,6 @@ RUN apt-get update \
         mopidy-spotify-tunigo \
         mopidy-tunein \
         git \
-        gstreamer0.10-plugins-bad \
-        gstreamer0.10-alsa \
         gstreamer1.0-libav \
         python-crypto \
         python-setuptools
@@ -26,7 +24,6 @@ RUN curl -L https://bootstrap.pypa.io/get-pip.py | python -
 RUN pip install --ignore-installed Mopidy-Iris
 RUN pip install -U six \
     && pip install markerlib \
-    && pip install Mopidy-YouTube \
     && pip install Mopidy-Local-SQLite \
     && pip install Mopidy-Local-Images \
     && pip install Mopidy-Party \

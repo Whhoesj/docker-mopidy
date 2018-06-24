@@ -14,7 +14,6 @@ Uses Pulseaudio for audio output.
 ### Backend extensions
 * Spotify
 * Spotify tunigo
-* Youtube
 * Soundcloud
 * Scrobbler
 * Tunein
