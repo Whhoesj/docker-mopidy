@@ -1,3 +1,9 @@
+# Not maintained
+
+This image/repo is no longer maintained since I don't use Mopidy myself anymore.
+
+---
+
 # Mopidy Docker image
 Image for running [Mopidy](https://www.mopidy.com/) in Docker.  
 Uses Pulseaudio for audio output.
